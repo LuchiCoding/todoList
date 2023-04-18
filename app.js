@@ -5,6 +5,9 @@ const express = require("express");
 const mongoose= require("mongoose")
 const _=require("lodash")
 const dontev= require('dotenv').config()
+const PORT = process.env.PORT || 3000
+
+
 
 const app = express();
 
@@ -14,6 +17,16 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 mongoose.connect(process.env.DB_HOST,{useNewUrlParser:true})
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.DB_HOST,{useNewUrlParser:true});
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
 
  
 const itemsSchema = new mongoose.Schema({
@@ -137,6 +150,8 @@ app.get("/about", function(req, res){
   res.render("about");
 });
 
-app.listen(3000, function() {
-  console.log("Server started on port 3000");
-});
+connectDB().then(() => {
+  app.listen(PORT, () => {
+      console.log("listening for requests");
+  })
+})
