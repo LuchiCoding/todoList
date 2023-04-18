@@ -20,7 +20,8 @@ app.use(express.static("public"));
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.DB_HOST,{useNewUrlParser:true});
+    const conn = await mongoose.connect("mongodb+srv://capojigen:4j3KYO7vl@cluster0.atonyo9.mongodb.net/todolistDB"
+    ,{useNewUrlParser:true});
   
   } catch (error) {
     console.log(error);
