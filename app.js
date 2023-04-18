@@ -4,6 +4,7 @@ const { name } = require("ejs");
 const express = require("express");
 const mongoose= require("mongoose")
 const _=require("lodash")
+const dontev= require('dotenv').config()
 
 const app = express();
 
@@ -12,7 +13,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb+srv://capojigen:4j3KYO7vl@cluster0.atonyo9.mongodb.net/todolistDB",{useNewUrlParser:true})
+mongoose.connect(process.env.DB_HOST,{useNewUrlParser:true})
 
  
 const itemsSchema = new mongoose.Schema({
